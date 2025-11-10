@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sözleşme Analiz Sistemi | AI Destekli Hukuki İnceleme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a202c;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding-top: 40px;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .left-panel {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 60px 50px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: start;
+            margin-bottom: 32px;
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .feature-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        
+        .feature-content p {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.6;
+        }
+        
+        .right-panel {
+            padding: 60px 50px;
+        }
+        
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+        
+        .form-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #f7fafc;
+        }
+        
+        input[type="email"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .file-upload {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+            border: 3px dashed #cbd5e0;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f7fafc;
+        }
+        
+        .file-upload-label:hover {
+            border-color: #667eea;
+            background: #edf2f7;
+        }
+        
+        .file-upload-label.has-file {
+            border-color: #48bb78;
+            background: #f0fff4;
+            border-style: solid;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .upload-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .upload-subtext {
+            font-size: 13px;
+            color: #718096;
+        }
+        
+        .file-info {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #276749;
+        }
+        
+        .file-info.show {
+            display: block;
+        }
+        
+        .hint {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-top: 6px;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        
+        button {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.5);
+        }
+        
+        .response {
+            margin-top: 24px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            display: none;
+        }
+        
+        .response.success {
+            background: #f0fff4;
+            border: 2px solid #9ae6b4;
+            color: #276749;
+        }
+        
+        .response.error {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            color: #c53030;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 24px;
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 48px;
+            padding-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 968px) {
+            .main-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-panel {
+                padding: 40px 30px;
+            }
+            
+            .right-panel {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Sözleşme Analiz Sistemi</h1>
+            <p>Yapay Zeka ile Saniyeler İçinde Hukuki İnceleme</p>
+        </div>
+        
+        <div class="main-card">
+            <div class="left-panel">
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-content">
+                        <h3>AI Destekli Analiz</h3>
+                        <p>Gelişmiş yapay zeka modeli ile sözleşmelerinizi Türk hukuku açısından detaylı şekilde inceler</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-content">
+                        <h3>Hızlı Sonuç</h3>
+                        <p>Dakikalar içinde kapsamlı risk analizi ve öneriler içeren rapor email ile tarafınıza ulaşır</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-content">
+                        <h3>Risk Değerlendirmesi</h3>
+                        <p>Her madde için risk seviyesi belirlenir ve ilgili kanun maddeleri ile öneriler sunulur</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-content">
+                        <h3>Soru-Cevap</h3>
+                        <p>Sözleşme hakkında özel sorularınızı sorun, AI anında detaylı cevaplar versin</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <h2 class="form-title">Hemen Başlayın</h2>
+                <p class="form-subtitle">Sözleşmenizi yükleyin ve analiz edin</p>
+                
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="email">Email Adresiniz</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="ornek@email.com"
+                            required
+                        >
+                        <p class="hint">Rapor bu adrese gönderilecek</p>
+                    </div>
+                    
+                    <div class="file-upload">
+                        <input type="file" id="fileInput" accept=".pdf" required>
+                        <label for="fileInput" class="file-upload-label" id="fileLabel">
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Sözleşme Dosyanızı Yükleyin</div>
+                            <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
+                        </label>
+                        <div class="file-info" id="fileInfo"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="question">Soru (Opsiyonel)</label>
+                        <textarea 
+                            id="question" 
+                            placeholder="Örnek: Bu sözleşmede cezai şart var mı? / Fesih koşulları nelerdir?"
+                        ></textarea>
+                        <p class="hint">Soru yazarsanız 'Soru Sor', yazmazsanız 'Risk Analizi' butonuna basın</p>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="button" class="btn-primary" id="btnAnalyze">
+                            📊 Risk Analizi Yap
+                        </button>
+                        <button type="button" class="btn-secondary" id="btnQuestion">
+                            💬 Soru Sor
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">İşlem yapılıyor, lütfen bekleyin...</div>
+                </div>
+                
+                <div class="response" id="response"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Sözleşme Analiz Sistemi • Tüm hakları saklıdır</p>
+        </div>
+    </div>
+
+    <script>
+        // WEBHOOK URL - Buraya N8N webhook URL'inizi yapıştırın
+        const WEBHOOK_URL = https://koreay.app.n8n.cloud/webhook/7ee74cc7-d471-4314-93ae-3ba76528ac63;
+        
+        const fileInput = document.getElementById('fileInput');
+        const fileLabel = document.getElementById('fileLabel');
+        const fileInfo = document.getElementById('fileInfo');
+        const questionInput = document.getElementById('question');
+        const emailInput = document.getElementById('email');
+        const btnAnalyze = document.getElementById('btnAnalyze');
+        const btnQuestion = document.getElementById('btnQuestion');
+        const loading = document.getElementById('loading');
+        const response = document.getElementById('response');
+
+        // Dosya seçimi
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                fileLabel.classList.add('has-file');
+                fileLabel.innerHTML = `
+                    <div class="upload-icon">✓</div>
+                    <div class="upload-text">Dosya Seçildi</div>
+                    <div class="upload-subtext">Başka dosya seçmek için tıklayın</div>
+                `;
+                fileInfo.textContent = `${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                fileInfo.classList.add('show');
+            }
+        });
+
+        // Drag & Drop
+        fileLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileLabel.style.borderColor = '#667eea';
+        });
+
+        fileLabel.addEventListener('dragleave', () => {
+            fileLabel.style.borderColor = '#cbd5e0';
+        });
+
+        fileLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileLabel.style.borderColor = '#cbd5e0';
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Soru değişince buton durumu
+        questionInput.addEventListener('input', () => {
+            btnQuestion.disabled = questionInput.value.trim().length === 0;
+        });
+
+        // Butonlar
+        btnAnalyze.addEventListener('click', () => sendRequest('analyze'));
+        btnQuestion.addEventListener('click', () => {
+            if (!questionInput.value.trim()) {
+                showResponse('❌ Lütfen bir soru yazın!', false);
+                return;
+            }
+            sendRequest('question');
+        });
+
+        // Ana gönderme fonksiyonu
+        async function sendRequest(action) {
+            const file = fileInput.files[0];
+            const email = emailInput.value.trim();
+            const question = questionInput.value.trim();
+            
+            if (!file) {
+                showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+                return;
+            }
+            
+            if (!email) {
+                showResponse('❌ Lütfen email adresinizi girin!', false);
+                return;
+            }
+
+            btnAnalyze.disabled = true;
+            btnQuestion.disabled = true;
+            loading.style.display = 'block';
+            response.style.display = 'none';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('action', action);
+                formData.append('email', email);
+                
+                if (action === 'question' && question) {
+                    formData.append('question', question);
+                }
+
+                const fetchResponse = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (fetchResponse.ok) {
+                    const message = action === 'question' 
+                        ? '✅ Sorunuz cevaplandı! Raporunuz email adresinize gönderildi.'
+                        : '✅ Risk analizi tamamlandı! Raporunuz email adresinize gönderildi.';
+                    showResponse(message, true);
+                    
+                    // Formu temizle
+                    setTimeout(() => {
+                        fileInput.value = '';
+                        questionInput.value = '';
+                        fileLabel.classList.remove('has-file');
+                        fileLabel.innerHTML = `
+                            <div class="upload-icon">📄</div>
+                            <div class="upload-text">Sözleşme Dosyanızı Yükleyin</div>
+                            <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
+                        `;
+                        fileInfo.classList.remove('show');
+                    }, 3000);
+                } else {
+                    showResponse('❌ Bir hata oluştu. Lütfen tekrar deneyin.', false);
+                }
+            } catch (error) {
+                showResponse('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.', false);
+            } finally {
+                btnAnalyze.disabled = false;
+                btnQuestion.disabled = questionInput.value.trim().length === 0;
+                loading.style.display = 'none';
+            }
+        }
+
+        function showResponse(message, isSuccess) {
+            response.textContent = message;
+            response.className = 'response ' + (isSuccess ? 'success' : 'error');
+            response.style.display = 'block';
+        }
+
+        // Sayfa yüklendiğinde
+        btnQuestion.disabled = true;
+    </script>
+</body>
+</html>
