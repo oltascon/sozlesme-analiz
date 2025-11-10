@@ -330,6 +330,16 @@
             .right-panel {
                 padding: 40px 30px;
             }
+            
+            select {
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+}
         }
     </style>
 </head>
@@ -402,7 +412,22 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="question">Soru (Opsiyonel)</label>
+    <label for="documentType">Belge Türü (İsteğe bağlı)</label>
+    <select id="documentType" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-family: inherit; background: #f7fafc; transition: all 0.2s;">
+        <option value="auto">🔍 Otomatik Tespit Et</option>
+        <option value="nda">📄 NDA / Gizlilik Sözleşmesi</option>
+        <option value="employment">👔 İş Sözleşmesi</option>
+        <option value="sales">🛒 Satış Sözleşmesi</option>
+        <option value="service">🔧 Hizmet Sözleşmesi</option>
+        <option value="data">📊 Veri İşleme Anlaşması</option>
+        <option value="case">⚖️ Dava Dosyası</option>
+        <option value="poa">📋 Vekaletname</option>
+        <option value="other">📝 Diğer</option>
+    </select>
+    <p class="hint">Eğer belge türünden emin değilseniz "Otomatik Tespit Et" seçeneğini kullanın</p>
+</div>
+                    <div class="form-group">
+                        <label for="question">Soru (İsteğe bağlı)</label>
                         <textarea 
                             id="question" 
                             placeholder="Örnek: Bu sözleşmede cezai şart var mı? / Fesih koşulları nelerdir?"
@@ -442,6 +467,7 @@
         const fileLabel = document.getElementById('fileLabel');
         const fileInfo = document.getElementById('fileInfo');
         const questionInput = document.getElementById('question');
+        const documentTypeSelect = document.getElementById('documentType');
         const emailInput = document.getElementById('email');
         const btnAnalyze = document.getElementById('btnAnalyze');
         const btnQuestion = document.getElementById('btnQuestion');
@@ -519,20 +545,22 @@
             response.style.display = 'none';
 
             try {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('action', action);
-                formData.append('email', email);
-                
-                if (action === 'question' && question) {
-                    formData.append('question', question);
-                }
-
-                const fetchResponse = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('action', action);
+    formData.append('email', email);
+    
+    if (action === 'question' && question) {
+        formData.append('question', question);
+    }
+    
+    const documentType = documentTypeSelect.value;
+    formData.append('documentType', documentType);
+    
+    const fetchResponse = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        body: formData
+    });
                 if (fetchResponse.ok) {
                     const message = action === 'question' 
                         ? '✅ Sorunuz cevaplandı! Raporunuz email adresinize gönderildi.'
