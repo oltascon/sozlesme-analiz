@@ -613,7 +613,34 @@
 
                         <!-- SEÇİLEN BELGE TÜRü -->
                         <div class="selected-type" id="selectedType">Belge türü seçilmedi</div>
+                        
+<!-- SORU / ANALİZ SEÇİMİ -->
+<div class="form-group">
+    <label>Ne Yapmak İstiyorsunuz?</label>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <label style="margin: 0; cursor: pointer;">
+            <input type="radio" name="action" value="analyze" checked required style="margin-right: 8px;">
+            📊 Risk Analizi
+        </label>
+        <label style="margin: 0; cursor: pointer;">
+            <input type="radio" name="action" value="question" required style="margin-right: 8px;">
+            💬 Soru Sor
+        </label>
+    </div>
+</div>
 
+<!-- SORU ALANI (Sadece Soru Seçildiğinde Görünür) -->
+<div class="form-group" id="questionGroup" style="display: none;">
+    <label for="question">Sorunuz</label>
+    <textarea 
+        id="question" 
+        placeholder="Sözleşme hakkında ne sormak istiyorsunuz?"
+        rows="4"
+        style="resize: vertical;"
+    ></textarea>
+    <p class="hint">Örn: Bu sözleşmede ücret ne zaman ödenir? Fesih koşulları nelerdir?</p>
+</div>
+                        
                         <!-- EMAIL -->
                         <div class="form-group">
                             <label for="email">Email Adresiniz</label>
@@ -824,11 +851,25 @@
 
         // Analiz Gönder
         const btnAnalyze = document.getElementById('btnAnalyze');
+btnAnalyze.textContent = '📊 Analiz Yap / Soruyu Gönder';
         const btnReset = document.getElementById('btnReset');
         const loading = document.getElementById('loading');
         const response = document.getElementById('response');
         const email = document.getElementById('email');
 
+        // Soru/Analiz seçimi görünürlüğü
+document.querySelectorAll('input[name="action"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const questionGroup = document.getElementById('questionGroup');
+        if (radio.value === 'question') {
+            questionGroup.style.display = 'block';
+        } else {
+            questionGroup.style.display = 'none';
+            document.getElementById('question').value = '';
+        }
+    });
+});
+        
         btnAnalyze.addEventListener('click', async (e) => {
             e.preventDefault();
 
@@ -857,12 +898,24 @@
             response.classList.remove('show');
 
             try {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('action', 'analyze');
-                formData.append('email', emailVal);
-                formData.append('documentType', docType);
-                formData.append('documentGroup', groupTab);
+                const action = document.querySelector('input[name="action"]:checked').value;
+const question = document.getElementById('question').value.trim();
+
+if (action === 'question' && !question) {
+    showResponse('❌ Lütfen bir soru girin!', false);
+    return;
+}
+
+const formData = new FormData();
+formData.append('file', file);
+formData.append('action', action);
+formData.append('email', emailVal);
+formData.append('documentType', docType);
+formData.append('documentGroup', groupTab);
+
+if (action === 'question' && question) {
+    formData.append('question', question);
+}
 
                 const fetchResponse = await fetch(WEBHOOK_URL, {
                     method: 'POST',
