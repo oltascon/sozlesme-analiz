@@ -66,6 +66,10 @@
             margin: 0 auto;
         }
 
+        #mainMenu.hidden {
+            display: none;
+        }
+
         .menu-card {
             background: white;
             border-radius: 24px;
@@ -670,7 +674,6 @@
                         <button class="analysis-tab active" onclick="switchTab('risk')">📄 Risk Analizi</button>
                         <button class="analysis-tab" onclick="switchTab('comparison')">🔄 Sözleşme Karşılaştırma</button>
                     </div>
-                    <button class="back-button-header" onclick="backToMenu()">← Geri Dön</button>
                 </div>
 
                 <div class="analysis-card">
@@ -797,8 +800,6 @@
                     <button class="analysis-tab" onclick="goToAnalysis()" style="opacity: 0.7;">📄 Risk Analizi</button>
                     <button class="analysis-tab active" onclick="switchTab('comparison')" style="opacity: 1;">🔄 Sözleşme Karşılaştırma</button>
                 </div>
-                <button class="back-button-header" onclick="backToMenu()">← Geri Dön</button>
-            </div>
             <div style="background: white; border-radius: 24px; padding: 40px; text-align: center;">
                 <h2>Sözleşme Karşılaştırma (Yakında)</h2>
                 <p style="color: #718096; margin-top: 20px;">Bu özellik yakında aktif olacak.</p>
@@ -878,20 +879,19 @@
         // Sayfa Navigasyon
         function goToMenu() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('mainMenu').classList.remove('hidden');
             document.getElementById('mainMenu').classList.add('active');
-        }
-
-        function backToMenu() {
-            goToMenu();
         }
 
         function goToAnalysis() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('mainMenu').classList.add('hidden');
             document.getElementById('analysisPage').classList.add('active');
         }
 
         function goToComparison() {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('mainMenu').classList.add('hidden');
             document.getElementById('comparisonPage').classList.add('active');
         }
 
