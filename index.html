@@ -30,7 +30,7 @@
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             padding-top: 40px;
         }
         
@@ -120,10 +120,16 @@
         }
 
         /* ===== ADIM 2: RİSK ANALİZİ SAYFASI ===== */
+        .analysis-page-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .analysis-header {
             background: white;
-            border-radius: 16px 16px 0 0;
-            padding: 24px 40px;
+            border-radius: 12px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -132,17 +138,17 @@
 
         .analysis-tabs {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
 
         .analysis-tab {
-            padding: 12px 24px;
-            border: 2px solid transparent;
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
             background: #f7fafc;
             cursor: pointer;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             color: #718096;
             transition: all 0.2s;
         }
@@ -167,6 +173,7 @@
             font-weight: 600;
             color: #2d3748;
             transition: all 0.2s;
+            font-size: 14px;
         }
 
         .back-button-header:hover {
@@ -175,10 +182,55 @@
 
         .analysis-card {
             background: white;
-            border-radius: 0 0 24px 24px;
+            border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .left-panel {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 60px 50px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: start;
+            margin-bottom: 32px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .feature-content p {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .right-panel {
+            padding: 60px 50px;
+            overflow-y: auto;
+            max-height: 800px;
         }
 
         .form-title {
@@ -189,7 +241,7 @@
         }
 
         .form-group {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         label {
@@ -197,7 +249,7 @@
             font-size: 14px;
             font-weight: 600;
             color: #2d3748;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         select, input[type="email"], textarea {
@@ -307,55 +359,6 @@
             justify-content: center;
         }
 
-        /* ===== ACTION BUTTONS (Risk/Soru) ===== */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-
-        .action-button {
-            padding: 24px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            background: #f7fafc;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-        }
-
-        .action-button:hover {
-            border-color: #667eea;
-            background: #edf2f7;
-        }
-
-        .action-button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: #667eea;
-            color: white;
-        }
-
-        .action-button-icon {
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .action-button-title {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-
-        .action-button-desc {
-            font-size: 13px;
-            opacity: 0.7;
-        }
-
-        .action-button.active .action-button-desc {
-            opacity: 0.9;
-        }
-
         /* ===== FILE UPLOAD ===== */
         .file-upload {
             position: relative;
@@ -425,6 +428,44 @@
             display: block;
         }
 
+        /* ===== SORU ALANI ===== */
+        .question-section {
+            margin-bottom: 24px;
+        }
+
+        .question-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .question-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #f7fafc;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .question-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .question-hint {
+            font-size: 13px;
+            color: #a0aec0;
+            margin-top: 6px;
+        }
+
         /* ===== BUTONLAR ===== */
         .button-group {
             display: grid;
@@ -448,7 +489,7 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             opacity: 0.9;
             transform: translateY(-2px);
         }
@@ -473,19 +514,22 @@
         }
 
         .btn-question {
-            background: #f0fff4;
-            color: #276749;
+            background: #c6f6d5;
+            color: #22543d;
             border: 2px solid #9ae6b4;
         }
 
         .btn-question:hover:not(:disabled) {
-            background: #e6ffed;
-            border-color: #68d391;
+            background: #9ae6b4;
+            transform: translateY(-2px);
         }
 
         .btn-question:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            background: #e2e8f0;
+            color: #a0aec0;
+            border: 2px solid #cbd5e0;
         }
 
         /* ===== LOADING & RESPONSE ===== */
@@ -551,22 +595,17 @@
                 padding: 0 20px;
             }
 
-            .analysis-header {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .analysis-tabs {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .analysis-tab {
-                width: 100%;
-            }
-
             .analysis-card {
-                padding: 30px 20px;
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                padding: 40px 30px;
+            }
+
+            .right-panel {
+                padding: 40px 30px;
+                max-height: none;
             }
 
             .header h1 {
@@ -577,12 +616,24 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .action-buttons {
+            .button-group {
                 grid-template-columns: 1fr;
             }
 
-            .button-group {
-                grid-template-columns: 1fr;
+            .analysis-header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .analysis-tabs {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .analysis-tab {
+                flex: 1;
+                min-width: 120px;
             }
         }
     </style>
@@ -613,98 +664,141 @@
 
         <!-- ===== SAYFA 2: RİSK ANALİZİ ===== -->
         <div id="analysisPage" class="page">
-            <div class="analysis-header">
-                <div class="analysis-tabs">
-                    <button class="analysis-tab active" onclick="switchTab('risk')">📊 Risk Analizi</button>
-                    <button class="analysis-tab" onclick="switchTab('question')">💬 Soru Sor</button>
+            <div class="analysis-page-wrapper">
+                <div class="analysis-header">
+                    <div class="analysis-tabs">
+                        <button class="analysis-tab active" onclick="switchTab('risk')">📄 Risk Analizi</button>
+                        <button class="analysis-tab" onclick="switchTab('comparison')">🔄 Sözleşme Karşılaştırma</button>
+                    </div>
+                    <button class="back-button-header" onclick="backToMenu()">← Geri Dön</button>
                 </div>
-                <button class="back-button-header" onclick="backToMenu()">← Geri Dön</button>
-            </div>
 
-            <div class="analysis-card">
-                <h2 class="form-title">Belge Analizi</h2>
-
-                <form id="analysisForm">
-                    <!-- GRUP SEÇİMİ -->
-                    <div class="form-group">
-                        <label>Belge Grubu</label>
-                        <div class="group-tabs" id="groupTabs">
-                            <button type="button" class="group-tab active" data-group="sozlesme">A: Sözleşme</button>
-                            <button type="button" class="group-tab" data-group="dava">B: Dava</button>
-                            <button type="button" class="group-tab" data-group="yetki">C: Yetki</button>
-                            <button type="button" class="group-tab" data-group="kurumsal">D: Kurumsal</button>
-                            <button type="button" class="group-tab" data-group="idari">E: İdari</button>
-                            <button type="button" class="group-tab" data-group="finansal">F: Finansal</button>
+                <div class="analysis-card">
+                    <div class="left-panel">
+                        <div class="feature">
+                            <div class="feature-icon">🤖</div>
+                            <div class="feature-content">
+                                <h3>AI Destekli Analiz</h3>
+                                <p>Gelişmiş yapay zeka modeli ile sözleşmelerinizi Türk hukuku açısından detaylı şekilde inceler</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-content">
+                                <h3>Hızlı Sonuç</h3>
+                                <p>Dakikalar içinde kapsamlı risk analizi ve öneriler içeren rapor email ile tarafınıza ulaşır</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <h3>Risk Değerlendirmesi</h3>
+                                <p>Her risk için risk seviyesi belirlenir ve ilgili kanun maddeleri ile öneriler sunulur</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">💬</div>
+                            <div class="feature-content">
+                                <h3>Belge Türüne Özel</h3>
+                                <p>Seçtiğiniz belge türüne göre özelleştirilmiş kontrol listesi ile analiz yapılır</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- BELGE TÜRÜ SEÇİMİ -->
-                    <div class="form-group">
-                        <label>Belge Türü</label>
-                        <div class="document-list" id="documentList"></div>
+                    <div class="right-panel">
+                        <h2 class="form-title">Belge Analizi</h2>
+
+                        <form id="analysisForm">
+                            <!-- GRUP SEÇİMİ -->
+                            <div class="form-group">
+                                <label>Belge Grubu</label>
+                                <div class="group-tabs" id="groupTabs">
+                                    <button type="button" class="group-tab active" data-group="sozlesme">A: Sözleşme</button>
+                                    <button type="button" class="group-tab" data-group="dava">B: Dava</button>
+                                    <button type="button" class="group-tab" data-group="yetki">C: Yetki</button>
+                                    <button type="button" class="group-tab" data-group="kurumsal">D: Kurumsal</button>
+                                    <button type="button" class="group-tab" data-group="idari">E: İdari</button>
+                                    <button type="button" class="group-tab" data-group="finansal">F: Finansal</button>
+                                </div>
+                            </div>
+
+                            <!-- BELGE TÜRÜ SEÇİMİ -->
+                            <div class="form-group">
+                                <label>Belge Türü</label>
+                                <div class="document-list" id="documentList"></div>
+                            </div>
+
+                            <!-- SEÇİLEN BELGE TÜRü -->
+                            <div class="selected-type" id="selectedType">Belge türü seçilmedi</div>
+
+                            <!-- EMAIL -->
+                            <div class="form-group">
+                                <label for="email">Email Adresiniz</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    placeholder="ornek@email.com"
+                                    required
+                                >
+                                <p class="hint">Rapor bu adrese gönderilecek</p>
+                            </div>
+
+                            <!-- FILE UPLOAD -->
+                            <div class="file-upload">
+                                <input type="file" id="fileInput" accept=".pdf" required>
+                                <label for="fileInput" class="file-upload-label" id="fileLabel">
+                                    <div class="upload-icon">📄</div>
+                                    <div class="upload-text">Belgenizi Yükleyin</div>
+                                    <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
+                                </label>
+                                <div class="file-info" id="fileInfo"></div>
+                            </div>
+
+                            <!-- SORU ALANI (HER ZAMAN GÖRÜNÜR) -->
+                            <div class="question-section">
+                                <label class="question-label">Soru (İsteğe Bağlı)</label>
+                                <textarea 
+                                    id="question" 
+                                    class="question-textarea"
+                                    placeholder="Örnek: Bu sözleşmede cezai şart var mı? / Fesih koşulları nelerdir?"
+                                ></textarea>
+                                <p class="question-hint">Soru yazarsanız 'Soru Sor', yazmazsanız 'Risk Analizi Yap' butonuna basın</p>
+                            </div>
+
+                            <!-- BUTONLAR -->
+                            <div class="button-group">
+                                <button type="button" class="btn-primary" id="btnAnalyze">
+                                    📊 Risk Analizi Yap
+                                </button>
+                                <button type="button" class="btn-question" id="btnQuestion" disabled>
+                                    💬 Soru Sor
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="loading" id="loading">
+                            <div class="spinner"></div>
+                            <div class="loading-text">İşlem yapılıyor, lütfen bekleyin...</div>
+                        </div>
+
+                        <div class="response" id="response"></div>
                     </div>
-
-                    <!-- SEÇİLEN BELGE TÜRü -->
-                    <div class="selected-type" id="selectedType">Belge türü seçilmedi</div>
-
-                    <!-- EMAIL -->
-                    <div class="form-group">
-                        <label for="email">Email Adresiniz</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            placeholder="ornek@email.com"
-                            required
-                        >
-                        <p class="hint">Rapor bu adrese gönderilecek</p>
-                    </div>
-
-                    <!-- FILE UPLOAD -->
-                    <div class="file-upload">
-                        <input type="file" id="fileInput" accept=".pdf" required>
-                        <label for="fileInput" class="file-upload-label" id="fileLabel">
-                            <div class="upload-icon">📄</div>
-                            <div class="upload-text">Belgenizi Yükleyin</div>
-                            <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
-                        </label>
-                        <div class="file-info" id="fileInfo"></div>
-                    </div>
-
-                    <!-- SORU ALANI (Risk Analizi kısmında gizli) -->
-                    <div class="form-group" id="questionGroup" style="display: none;">
-                        <label for="question">Sorunuz</label>
-                        <textarea 
-                            id="question" 
-                            placeholder="Sözleşme hakkında ne sormak istiyorsunuz?"
-                            rows="4"
-                            style="resize: vertical;"
-                        ></textarea>
-                        <p class="hint">Örn: Bu sözleşmede ücret ne zaman ödenir? Fesih koşulları nelerdir?</p>
-                    </div>
-
-                    <!-- BUTONLAR -->
-                    <div class="button-group">
-                        <button type="button" class="btn-primary" id="btnAnalyze">
-                            📊 Analiz Yap
-                        </button>
-                        <button type="button" class="btn-secondary" id="btnReset">
-                            🔄 Temizle
-                        </button>
-                    </div>
-                </form>
-
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <div class="loading-text">İşlem yapılıyor, lütfen bekleyin...</div>
                 </div>
-
-                <div class="response" id="response"></div>
             </div>
         </div>
 
         <!-- ===== SAYFA 3: KARŞILAŞTIRMA ===== -->
         <div id="comparisonPage" class="page">
-            <button class="back-button-header" onclick="backToMenu()" style="margin-bottom: 20px;">← Geri Dön</button>
+            <div class="analysis-header" style="margin-bottom: 20px;">
+                <div class="analysis-tabs">
+                    <button class="analysis-tab" onclick="goToAnalysis()" style="opacity: 0.7;">📄 Risk Analizi</button>
+                    <button class="analysis-tab active" onclick="switchTab('comparison')" style="opacity: 1;">🔄 Sözleşme Karşılaştırma</button>
+                </div>
+                <button class="back-button-header" onclick="backToMenu()">← Geri Dön</button>
+            </div>
             <div style="background: white; border-radius: 24px; padding: 40px; text-align: center;">
                 <h2>Sözleşme Karşılaştırma (Yakında)</h2>
                 <p style="color: #718096; margin-top: 20px;">Bu özellik yakında aktif olacak.</p>
@@ -774,26 +868,10 @@
 
         // Tab Switching
         function switchTab(tabName) {
-            const allTabs = document.querySelectorAll('.analysis-tab');
-            const questionGroup = document.getElementById('questionGroup');
-            const btnAnalyze = document.getElementById('btnAnalyze');
-            const btnReset = document.getElementById('btnReset');
-
-            allTabs.forEach(tab => tab.classList.remove('active'));
-            
             if (tabName === 'risk') {
-                allTabs[0].classList.add('active');
-                questionGroup.style.display = 'none';
-                document.getElementById('question').value = '';
-                btnAnalyze.textContent = '📊 Analiz Yap';
-                btnAnalyze.className = 'btn-primary';
-                btnReset.textContent = '🔄 Temizle';
-            } else {
-                allTabs[1].classList.add('active');
-                questionGroup.style.display = 'block';
-                btnAnalyze.textContent = '💬 Soruyu Gönder';
-                btnAnalyze.className = 'btn-question';
-                btnReset.textContent = '🔄 Temizle';
+                goToAnalysis();
+            } else if (tabName === 'comparison') {
+                goToComparison();
             }
         }
 
@@ -816,6 +894,18 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('comparisonPage').classList.add('active');
         }
+
+        // Soru Alanı - Buton Kontrol
+        const questionTextarea = document.getElementById('question');
+        const btnQuestion = document.getElementById('btnQuestion');
+
+        questionTextarea.addEventListener('input', () => {
+            if (questionTextarea.value.trim().length > 0) {
+                btnQuestion.disabled = false;
+            } else {
+                btnQuestion.disabled = true;
+            }
+        });
 
         // Grup Seçimi
         const groupTabs = document.querySelectorAll('.group-tab');
@@ -893,7 +983,6 @@
 
         // Analiz Gönder
         const btnAnalyze = document.getElementById('btnAnalyze');
-        const btnReset = document.getElementById('btnReset');
         const loading = document.getElementById('loading');
         const response = document.getElementById('response');
         const email = document.getElementById('email');
@@ -905,8 +994,6 @@
             const emailVal = email.value.trim();
             const docType = document.querySelector('input[name="documentType"]:checked')?.value;
             const groupTab = document.querySelector('.group-tab.active').dataset.group;
-            const currentTab = document.querySelector('.analysis-tab.active').textContent.includes('Risk') ? 'analyze' : 'question';
-            const question = document.getElementById('question').value.trim();
 
             if (!file) {
                 showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
@@ -923,26 +1010,18 @@
                 return;
             }
 
-            if (currentTab === 'question' && !question) {
-                showResponse('❌ Lütfen bir soru girin!', false);
-                return;
-            }
-
             btnAnalyze.disabled = true;
+            btnQuestion.disabled = true;
             loading.classList.add('show');
             response.classList.remove('show');
 
             try {
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('action', currentTab);
+                formData.append('action', 'analyze');
                 formData.append('email', emailVal);
                 formData.append('documentType', docType);
                 formData.append('documentGroup', groupTab);
-
-                if (currentTab === 'question' && question) {
-                    formData.append('question', question);
-                }
 
                 const fetchResponse = await fetch(WEBHOOK_URL, {
                     method: 'POST',
@@ -950,17 +1029,10 @@
                 });
 
                 if (fetchResponse.ok) {
-                    showResponse('✅ İşlem tamamlandı! Raporunuz email adresinize gönderildi.', true);
+                    showResponse('✅ Analiz tamamlandı! Raporunuz email adresinize gönderildi.', true);
                     
                     setTimeout(() => {
-                        fileInput.value = '';
-                        fileLabel.classList.remove('has-file');
-                        fileLabel.innerHTML = `
-                            <div class="upload-icon">📄</div>
-                            <div class="upload-text">Belgenizi Yükleyin</div>
-                            <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
-                        `;
-                        fileInfo.classList.remove('show');
+                        resetForm();
                     }, 3000);
                 } else {
                     showResponse('❌ Bir hata oluştu. Lütfen tekrar deneyin.', false);
@@ -969,11 +1041,89 @@
                 showResponse('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.', false);
             } finally {
                 btnAnalyze.disabled = false;
+                if (questionTextarea.value.trim().length > 0) {
+                    btnQuestion.disabled = false;
+                }
                 loading.classList.remove('show');
             }
         });
 
-        btnReset.addEventListener('click', () => {
+        // Soru Gönder
+        btnQuestion.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const file = fileInput.files[0];
+            const emailVal = email.value.trim();
+            const docType = document.querySelector('input[name="documentType"]:checked')?.value;
+            const groupTab = document.querySelector('.group-tab.active').dataset.group;
+            const question = questionTextarea.value.trim();
+
+            if (!file) {
+                showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+                return;
+            }
+
+            if (!emailVal) {
+                showResponse('❌ Lütfen email adresinizi girin!', false);
+                return;
+            }
+
+            if (!docType) {
+                showResponse('❌ Lütfen bir belge türü seçin!', false);
+                return;
+            }
+
+            if (!question) {
+                showResponse('❌ Lütfen bir soru girin!', false);
+                return;
+            }
+
+            btnAnalyze.disabled = true;
+            btnQuestion.disabled = true;
+            loading.classList.add('show');
+            response.classList.remove('show');
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('action', 'question');
+                formData.append('email', emailVal);
+                formData.append('documentType', docType);
+                formData.append('documentGroup', groupTab);
+                formData.append('question', question);
+
+                const fetchResponse = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (fetchResponse.ok) {
+                    showResponse('✅ Sorunuz gönderildi! Cevap email adresinize ulaşacak.', true);
+                    
+                    setTimeout(() => {
+                        resetForm();
+                    }, 3000);
+                } else {
+                    showResponse('❌ Bir hata oluştu. Lütfen tekrar deneyin.', false);
+                }
+            } catch (error) {
+                showResponse('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.', false);
+            } finally {
+                btnAnalyze.disabled = false;
+                if (questionTextarea.value.trim().length > 0) {
+                    btnQuestion.disabled = false;
+                }
+                loading.classList.remove('show');
+            }
+        });
+
+        function showResponse(message, isSuccess) {
+            response.textContent = message;
+            response.className = 'response ' + (isSuccess ? 'success' : 'error');
+            response.classList.add('show');
+        }
+
+        function resetForm() {
             document.getElementById('analysisForm').reset();
             fileLabel.classList.remove('has-file');
             fileLabel.innerHTML = `
@@ -983,14 +1133,9 @@
             `;
             fileInfo.classList.remove('show');
             document.getElementById('selectedType').textContent = 'Belge türü seçilmedi';
-            document.getElementById('question').value = '';
+            questionTextarea.value = '';
+            btnQuestion.disabled = true;
             response.classList.remove('show');
-        });
-
-        function showResponse(message, isSuccess) {
-            response.textContent = message;
-            response.className = 'response ' + (isSuccess ? 'success' : 'error');
-            response.classList.add('show');
         }
 
         // İlk grup seçimini tetikle
