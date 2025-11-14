@@ -721,6 +721,10 @@
     enctype="multipart/form-data"
     target="hiddenFrame"
 >
+                            <!-- GİZLİ ALANLAR (BURAYA EKLENECEK) -->
+    <input type="hidden" id="hiddenAction" name="action" value="">
+    <input type="hidden" id="hiddenDocumentGroup" name="documentGroup" value="">
+                            
                             <!-- GRUP SEÇİMİ -->
                             <div class="form-group">
                                 <label>Belge Grubu</label>
@@ -747,17 +751,19 @@
                             <div class="form-group">
                                 <label for="email">Email Adresiniz</label>
                                 <input 
-                                    type="email" 
-                                    id="email" 
-                                    placeholder="ornek@email.com"
-                                    required
-                                >
+    type="email" 
+    id="email" 
+    name="email"
+    placeholder="ornek@email.com"
+    required
+>
+
                                 <p class="hint">Rapor bu adrese gönderilecek</p>
                             </div>
 
                             <!-- FILE UPLOAD -->
                             <div class="file-upload">
-                                <input type="file" id="fileInput" accept=".pdf" required>
+                                <input type="file" id="fileInput" name="file" accept=".pdf" required>
                                 <label for="fileInput" class="file-upload-label" id="fileLabel">
                                     <div class="upload-icon">📄</div>
                                     <div class="upload-text">Belgenizi Yükleyin</div>
@@ -770,10 +776,11 @@
                             <div class="question-section">
                                 <label class="question-label">Soru (İsteğe Bağlı)</label>
                                 <textarea 
-                                    id="question" 
-                                    class="question-textarea"
-                                    placeholder="Örnek: Bu sözleşmede cezai şart var mı? / Fesih koşulları nelerdir?"
-                                ></textarea>
+    id="question" 
+    name="question"
+    class="question-textarea"
+    placeholder="Örnek: Bu sözleşmede cezai şart var mı? / Fesih koşulları nelerdir?"
+></textarea>
                                 <p class="question-hint">Soru yazarsanız 'Soru Sor', yazmazsanız 'Risk Analizi Yap' butonuna basın</p>
                             </div>
 
@@ -993,135 +1000,104 @@
         const response = document.getElementById('response');
         const email = document.getElementById('email');
 
-        btnAnalyze.addEventListener('click', async (e) => {
-            e.preventDefault();
+        btnAnalyze.addEventListener('click', (e) => {
+    e.preventDefault();
 
-            const file = fileInput.files[0];
-            const emailVal = email.value.trim();
-            const docType = document.querySelector('input[name="documentType"]:checked')?.value;
-            const groupTab = document.querySelector('.group-tab.active').dataset.group;
+    const file = fileInput.files[0];
+    const emailVal = email.value.trim();
+    const docType = document.querySelector('input[name="documentType"]:checked')?.value;
+    const groupTab = document.querySelector('.group-tab.active').dataset.group;
 
-            if (!file) {
-                showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
-                return;
-            }
+    if (!file) {
+        showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+        return;
+    }
 
-            if (!emailVal) {
-                showResponse('❌ Lütfen email adresinizi girin!', false);
-                return;
-            }
+    if (!emailVal) {
+        showResponse('❌ Lütfen email adresinizi girin!', false);
+        return;
+    }
 
-            if (!docType) {
-                showResponse('❌ Lütfen bir belge türü seçin!', false);
-                return;
-            }
+    if (!docType) {
+        showResponse('❌ Lütfen bir belge türü seçin!', false);
+        return;
+    }
 
-            btnAnalyze.disabled = true;
-            btnQuestion.disabled = true;
-            loading.classList.add('show');
-            response.classList.remove('show');
+    // GİZLİ ALANLARI DOLDURUYORUZ
+    document.getElementById('hiddenAction').value = 'analyze';
+    document.getElementById('hiddenDocumentGroup').value = groupTab;
 
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('action', 'analyze');
-                formData.append('email', emailVal);
-                formData.append('documentType', docType);
-                formData.append('documentGroup', groupTab);
+    // Loading UI
+    btnAnalyze.disabled = true;
+    btnQuestion.disabled = true;
+    loading.classList.add('show');
+    response.classList.remove('show');
 
-                const fetchResponse = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+    // FORMU GÖNDERİYORUZ — CORS YOK
+    document.getElementById('analysisForm').submit();
 
-                if (fetchResponse.ok) {
-                    showResponse('✅ Analiz tamamlandı! Raporunuz email adresinize gönderildi.', true);
-                    
-                    setTimeout(() => {
-                        resetForm();
-                    }, 3000);
-                } else {
-                    showResponse('❌ Bir hata oluştu. Lütfen tekrar deneyin.', false);
-                }
-            } catch (error) {
-                showResponse('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.', false);
-            } finally {
-                btnAnalyze.disabled = false;
-                if (questionTextarea.value.trim().length > 0) {
-                    btnQuestion.disabled = false;
-                }
-                loading.classList.remove('show');
-            }
-        });
+    // UI'yi hemen temizleyelim
+    setTimeout(() => {
+        showResponse('✅ Talebiniz alındı! Rapor email adresinize gönderilecek.', true);
+        resetForm();
+        loading.classList.remove('show');
+        btnAnalyze.disabled = false;
+        if (questionTextarea.value.trim().length > 0) btnQuestion.disabled = false;
+    }, 1500);
+});
 
-        // Soru Gönder
-        btnQuestion.addEventListener('click', async (e) => {
-            e.preventDefault();
 
-            const file = fileInput.files[0];
-            const emailVal = email.value.trim();
-            const docType = document.querySelector('input[name="documentType"]:checked')?.value;
-            const groupTab = document.querySelector('.group-tab.active').dataset.group;
-            const question = questionTextarea.value.trim();
+        btnQuestion.addEventListener('click', (e) => {
+    e.preventDefault();
 
-            if (!file) {
-                showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
-                return;
-            }
+    const file = fileInput.files[0];
+    const emailVal = email.value.trim();
+    const docType = document.querySelector('input[name="documentType"]:checked')?.value;
+    const groupTab = document.querySelector('.group-tab.active').dataset.group;
+    const question = questionTextarea.value.trim();
 
-            if (!emailVal) {
-                showResponse('❌ Lütfen email adresinizi girin!', false);
-                return;
-            }
+    if (!file) {
+        showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+        return;
+    }
 
-            if (!docType) {
-                showResponse('❌ Lütfen bir belge türü seçin!', false);
-                return;
-            }
+    if (!emailVal) {
+        showResponse('❌ Lütfen email adresinizi girin!', false);
+        return;
+    }
 
-            if (!question) {
-                showResponse('❌ Lütfen bir soru girin!', false);
-                return;
-            }
+    if (!docType) {
+        showResponse('❌ Lütfen bir belge türü seçin!', false);
+        return;
+    }
 
-            btnAnalyze.disabled = true;
-            btnQuestion.disabled = true;
-            loading.classList.add('show');
-            response.classList.remove('show');
+    if (!question) {
+        showResponse('❌ Lütfen bir soru girin!', false);
+        return;
+    }
 
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('action', 'question');
-                formData.append('email', emailVal);
-                formData.append('documentType', docType);
-                formData.append('documentGroup', groupTab);
-                formData.append('question', question);
+    // Gizli inputları dolduruyoruz
+    document.getElementById('hiddenAction').value = 'question';
+    document.getElementById('hiddenDocumentGroup').value = groupTab;
 
-                const fetchResponse = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+    // UI loading
+    btnAnalyze.disabled = true;
+    btnQuestion.disabled = true;
+    loading.classList.add('show');
+    response.classList.remove('show');
 
-                if (fetchResponse.ok) {
-                    showResponse('✅ Sorunuz gönderildi! Cevap email adresinize ulaşacak.', true);
-                    
-                    setTimeout(() => {
-                        resetForm();
-                    }, 3000);
-                } else {
-                    showResponse('❌ Bir hata oluştu. Lütfen tekrar deneyin.', false);
-                }
-            } catch (error) {
-                showResponse('❌ Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.', false);
-            } finally {
-                btnAnalyze.disabled = false;
-                if (questionTextarea.value.trim().length > 0) {
-                    btnQuestion.disabled = false;
-                }
-                loading.classList.remove('show');
-            }
-        });
+    // Formu gönderiyoruz
+    document.getElementById('analysisForm').submit();
+
+    setTimeout(() => {
+        showResponse('✅ Sorunuz alındı! Cevap email adresinize ulaşacak.', true);
+        resetForm();
+        loading.classList.remove('show');
+        btnAnalyze.disabled = false;
+        if (questionTextarea.value.trim().length > 0) btnQuestion.disabled = false;
+    }, 1500);
+});
+
 
         function showResponse(message, isSuccess) {
             response.textContent = message;
