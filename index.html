@@ -1059,7 +1059,8 @@ btnAnalyze.addEventListener('click', (e) => {
     const file = fileInput.files[0];
     const emailVal = email.value.trim();
     const docType = document.querySelector('input[name="documentType"]:checked')?.value;
-    const groupTab = document.querySelector('.group-tab.active').dataset.group;
+    const groupTabEl = document.querySelector('.group-tab.active');
+    const groupTab = groupTabEl ? groupTabEl.dataset.group : '';
     const question = questionTextarea.value.trim();
 
     if (!file) {
@@ -1092,8 +1093,9 @@ btnAnalyze.addEventListener('click', (e) => {
     loading.classList.add('show');
     response.classList.remove('show');
 
-    // Formu gönderiyoruz
-    document.getElementById('analysisForm').submit();
+    // Formu gönderiyoruz (tek kaynak: analysis-form)
+    const form = document.getElementById('analysis-form');
+    form.submit();
 
     setTimeout(() => {
         showResponse('✅ Sorunuz alındı! Cevap email adresinize ulaşacak.', true);
@@ -1104,31 +1106,31 @@ btnAnalyze.addEventListener('click', (e) => {
     }, 1500);
 });
 
+function showResponse(message, isSuccess) {
+    response.textContent = message;
+    response.className = 'response ' + (isSuccess ? 'success' : 'error');
+    response.classList.add('show');
+}
 
-        function showResponse(message, isSuccess) {
-            response.textContent = message;
-            response.className = 'response ' + (isSuccess ? 'success' : 'error');
-            response.classList.add('show');
-        }
+function resetForm() {
+    // Form id'si ile TUTARLI
+    document.getElementById('analysis-form').reset();
+    fileLabel.classList.remove('has-file');
+    fileLabel.innerHTML = `
+        <div class="upload-icon">📄</div>
+        <div class="upload-text">Belgenizi Yükleyin</div>
+        <div class="upload-subtext">veya sürükleyip bırakın (PDF veya Word)</div>
+    `;
+    fileInfo.classList.remove('show');
+    document.getElementById('selectedType').textContent = 'Belge türü seçilmedi';
+    questionTextarea.value = '';
+    btnQuestion.disabled = true;
+    response.classList.remove('show');
+}
 
-        function resetForm() {
-            document.getElementById('analysisForm').reset();
-            fileLabel.classList.remove('has-file');
-            fileLabel.innerHTML = `
-                <div class="upload-icon">📄</div>
-                <div class="upload-text">Belgenizi Yükleyin</div>
-                <div class="upload-subtext">veya sürükleyip bırakın (PDF veya Word)</div>
-            `;
-            fileInfo.classList.remove('show');
-            document.getElementById('selectedType').textContent = 'Belge türü seçilmedi';
-            questionTextarea.value = '';
-            btnQuestion.disabled = true;
-            response.classList.remove('show');
-        }
-
-        // İlk grup seçimini tetikle
-        groupTabs[0].click();
+// İlk grup seçimini tetikle
+groupTabs[0].click();
     </script>
-</body>
     <iframe name="hiddenFrame" style="display:none;"></iframe>
+</body>
 </html>
