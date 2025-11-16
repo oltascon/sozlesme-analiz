@@ -1039,14 +1039,13 @@ btnAnalyze.addEventListener('click', (e) => {
     const form = document.getElementById('analysis-form');
     form.submit();
 
-    // UI'yi temizle (backend zaten mail gönderecek)
+    // N8N cevap vermiyor, bu nedenle UI'yi manuel olarak yönetiyoruz
     setTimeout(() => {
         showResponse('✅ Talebiniz alındı! Rapor email adresinize gönderilecek.', true);
         resetForm();
         loading.classList.remove('show');
         btnAnalyze.disabled = false;
-        if (questionTextarea.value.trim().length > 0) btnQuestion.disabled = false;
-    }, 1200);
+    }, 1500);
 });
 
 
