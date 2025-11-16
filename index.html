@@ -997,18 +997,20 @@
         });
 
         // Analiz Gönder
-        const btnAnalyze = document.getElementById('btnAnalyze');
-        const loading = document.getElementById('loading');
-        const response = document.getElementById('response');
-        const email = document.getElementById('email');
+const btnAnalyze = document.getElementById('btnAnalyze');
+const loading = document.getElementById('loading');
+const response = document.getElementById('response');
+const email = document.getElementById('email');
+const questionTextarea = document.getElementById('question');
+const btnQuestion = document.getElementById('btnQuestion');
 
-        btnAnalyze.addEventListener('click', (e) => {
+btnAnalyze.addEventListener('click', (e) => {
     e.preventDefault();
 
     const file = fileInput.files[0];
     const emailVal = email.value.trim();
     const docType = document.querySelector('input[name="documentType"]:checked')?.value;
-    const groupTab = document.querySelector('.group-tab.active').dataset.group;
+    const groupTab = document.querySelector('.group-tab.active')?.dataset.group;
 
     if (!file) {
         showResponse('❌ Lütfen bir PDF veya Word (DOC/DOCX) dosyası seçin!', false);
@@ -1024,11 +1026,8 @@
         showResponse('❌ Lütfen bir belge türü seçin!', false);
         return;
     }
-    const form = document.getElementById('analysis-form');
-    form.submit();  // action="https://api.legalengine.com.tr/webhook/..." tetiklenecek
-});
 
-    // GİZLİ ALANLARI DOLDURUYORUZ
+    // Hidden alanları dolduralım
     document.getElementById('hiddenAction').value = 'analyze';
     document.getElementById('hiddenDocumentGroup').value = groupTab;
 
@@ -1038,18 +1037,20 @@
     loading.classList.add('show');
     response.classList.remove('show');
 
-    // FORMU GÖNDERİYORUZ — CORS YOK
-    document.getElementById('analysisForm').submit();
+    // FORMU GÖNDER — asıl kısım burası
+    const form = document.getElementById('analysis-form');
+    form.submit();
 
-    // UI'yi hemen temizleyelim
+    // UI'yi temizle (backend zaten mail gönderecek)
     setTimeout(() => {
         showResponse('✅ Talebiniz alındı! Rapor email adresinize gönderilecek.', true);
         resetForm();
         loading.classList.remove('show');
         btnAnalyze.disabled = false;
         if (questionTextarea.value.trim().length > 0) btnQuestion.disabled = false;
-    }, 1500);
+    }, 1200);
 });
+
 
 
         btnQuestion.addEventListener('click', (e) => {
