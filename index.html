@@ -1024,6 +1024,9 @@
         showResponse('❌ Lütfen bir belge türü seçin!', false);
         return;
     }
+    const form = document.getElementById('analysis-form');
+    form.submit();  // action="https://api.legalengine.com.tr/webhook/..." tetiklenecek
+});
 
     // GİZLİ ALANLARI DOLDURUYORUZ
     document.getElementById('hiddenAction').value = 'analyze';
