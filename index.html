@@ -1094,12 +1094,13 @@ btnAnalyze.addEventListener('click', (e) => {
     const form = document.getElementById('analysis-form');
     form.submit();
 
+    // N8N webhook response vermediği için UI’yi manuel yönetiyoruz
     setTimeout(() => {
-        showResponse('✅ Sorunuz alındı! Cevap email adresinize ulaşacak.', true);
+        showResponse('✅ Sorunuz alındı! Cevap email adresinize gönderilecek.', true);
         resetForm();
         loading.classList.remove('show');
         btnAnalyze.disabled = false;
-        if (questionTextarea.value.trim().length > 0) btnQuestion.disabled = false;
+        btnQuestion.disabled = true;  // soru alanı boşalacağı için yeniden disable
     }, 1500);
 });
 
