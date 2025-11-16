@@ -763,11 +763,11 @@
 
                             <!-- FILE UPLOAD -->
                             <div class="file-upload">
-                                <input type="file" id="fileInput" name="file" accept=".pdf" required>
+                                <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
                                 <label for="fileInput" class="file-upload-label" id="fileLabel">
                                     <div class="upload-icon">📄</div>
                                     <div class="upload-text">Belgenizi Yükleyin</div>
-                                    <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
+                                    <div class="upload-subtext">veya sürükleyip bırakın (PDF veya Word)</div>
                                 </label>
                                 <div class="file-info" id="fileInfo"></div>
                             </div>
@@ -1009,7 +1009,7 @@
     const groupTab = document.querySelector('.group-tab.active').dataset.group;
 
     if (!file) {
-        showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+        showResponse('❌ Lütfen bir PDF veya Word (DOC/DOCX) dosyası seçin!', false);
         return;
     }
 
@@ -1057,7 +1057,7 @@
     const question = questionTextarea.value.trim();
 
     if (!file) {
-        showResponse('❌ Lütfen bir PDF dosyası seçin!', false);
+        showResponse('❌ Lütfen bir PDF veya Word (DOC/DOCX) dosyası seçin!', false);
         return;
     }
 
@@ -1111,7 +1111,7 @@
             fileLabel.innerHTML = `
                 <div class="upload-icon">📄</div>
                 <div class="upload-text">Belgenizi Yükleyin</div>
-                <div class="upload-subtext">veya sürükleyip bırakın (PDF)</div>
+                <div class="upload-subtext">veya sürükleyip bırakın (PDF veya Word)</div>
             `;
             fileInfo.classList.remove('show');
             document.getElementById('selectedType').textContent = 'Belge türü seçilmedi';
